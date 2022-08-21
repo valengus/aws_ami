@@ -5,6 +5,12 @@
 
   tasks:
 
+  - name: Upgrade all packages, excluding kernel
+    ansible.builtin.yum:
+      name: '*'
+      state: latest
+      exclude: kernel*
+
   - name: Configure /etc/sysconfig/network
     ini_file:
       path: /etc/sysconfig/network
