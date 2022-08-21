@@ -1,0 +1,40 @@
+name: build image
+
+on: workflow_dispatch
+
+jobs:
+
+  build ol8image:
+
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/valengus/terraform:0.13.7
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.TOKEN }}
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: packer build -only=qemu.oraclelinux-8-aws
+      run: packer build -force -only=qemu.oraclelinux-8-aws ./oraclelinux-8-aws.pkr.hcl
+
+  build ol8imageUEK:
+    needs: ol8image
+
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/valengus/terraform:0.13.7
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.TOKEN }}
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: packer build -only=amazon-ebs.oraclelinux-8-latest-UEK
+      run: packer build -force -only=amazon-ebs.oraclelinux-8-latest-UEK ./oraclelinux-8-aws.pkr.hcl
