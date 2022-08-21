@@ -1,0 +1,68 @@
+---
+- name: 'provision'
+  hosts: all
+  become: true
+
+  tasks:
+
+  - name: Configure /etc/sysconfig/network
+    ini_file:
+      path: /etc/sysconfig/network
+      section: ''
+      option: NETWORKING
+      value: yes
+      no_extra_spaces: yes
+
+  - name: Configure /etc/sysconfig/network
+    ini_file:
+      path: /etc/sysconfig/network
+      section: ''
+      option: NOZEROCONF
+      value: yes
+      no_extra_spaces: yes
+
+  - name: ifcfg-eth0
+    copy:
+      content: |
+        TYPE=Ethernet
+        DEVICE=eth0
+        BOOTPROTO=dhcp
+        PERSISTENT_DHCLIENT=1
+        IPV6INIT=yes
+        IPV6_FAILURE_FATAL=no
+        PEERDNS=yes
+        USERCTL=yes
+        ONBOOT=yes
+      dest: /etc/sysconfig/network-scripts/ifcfg-eth0
+      owner: root
+      group: root
+      mode: '0644'
+
+  - name: Install additional software
+    dnf:
+      name:
+        - cloud-init
+        - cloud-utils-growpart
+        - dracut-config-generic
+        - gdisk
+        - rsync
+        - tar
+        - qemu-guest-agent
+        - yum-utils
+      state: present
+
+  - name: Enable cloud-init services
+    service:
+      name: "{{ item }}"
+      enabled: true
+    with_items:
+      - cloud-config
+      - cloud-init
+      - cloud-init-local
+      - cloud-final
+
+  - name: Change cloud-init user to ec2-user
+    replace:
+      dest: /etc/cloud/cloud.cfg
+      regexp: '^(\s+name:).*$'
+      replace: '\1 ec2-user'

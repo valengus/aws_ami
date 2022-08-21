@@ -1,0 +1,15 @@
+---
+- name: 'provision'
+  hosts: all
+  become: true
+
+  tasks:
+
+  # - name: Remove old kernels
+  #   shell: dnf remove -y $(dnf repoquery --installonly --latest-limit=-1 -q)
+
+  - name: Delete DNF cache
+    command: dnf clean all
+
+  - name: cloud-init clean 
+    shell: cloud-init clean

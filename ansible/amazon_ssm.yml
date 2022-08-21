@@ -1,0 +1,17 @@
+---
+- name: 'provision'
+  hosts: all
+  become: true
+
+  tasks:
+
+  - name: Install AWS Systems Manager Agent (SSM Agent)
+    dnf:
+      name: https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+      state: present
+      disable_gpg_check: yes
+
+  - name: Enable amazon-ssm-agent services
+    service:
+      name: amazon-ssm-agent
+      enabled: true
