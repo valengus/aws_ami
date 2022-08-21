@@ -11,8 +11,8 @@
   - name: Delete DNF cache
     command: dnf clean all
 
-  # - name: cloud-init clean 
-  #   shell: cloud-init clean
+  - name: cloud-init clean 
+    shell: cloud-init clean
 
   - name: sshd config
     block:
@@ -62,20 +62,3 @@
   - name: Truncate log files
     command: "truncate -s 0 {{ item.path }}"
     loop: "{{ log_files.files }}"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
