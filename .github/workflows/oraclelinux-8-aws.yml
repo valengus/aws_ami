@@ -22,7 +22,7 @@ jobs:
       run: packer build -force -only=qemu.oraclelinux-8-aws ./oraclelinux-8-aws.pkr.hcl
 
   build_ol8imageUEK:
-    needs: ol8image
+    needs: build_ol8image
 
     runs-on: ubuntu-latest
     container:
