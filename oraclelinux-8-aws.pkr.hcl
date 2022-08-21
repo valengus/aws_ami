@@ -88,8 +88,6 @@ build {
     use_proxy         = false
   }
 
-  # https://kb.msp360.com/managed-backup-service/service-role-vmimport-doesnt-have-permissions-to-continue
-
   post-processor "amazon-import" {
     ami_name        = "oraclelinux-8-latest-${local.packerstarttime}"
     format          = "raw"
