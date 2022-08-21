@@ -2,3 +2,4 @@ terraform.tfstate*
 output-oraclelinux-8-aws/*
 .terraform/*
 .vagrant/*
+Vagrantfile
