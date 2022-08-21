@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 jobs:
 
-  build ol8image:
+  build_ol8image:
 
     runs-on: ubuntu-latest
     container:
@@ -21,7 +21,7 @@ jobs:
     - name: packer build -only=qemu.oraclelinux-8-aws
       run: packer build -force -only=qemu.oraclelinux-8-aws ./oraclelinux-8-aws.pkr.hcl
 
-  build ol8imageUEK:
+  build_ol8imageUEK:
     needs: ol8image
 
     runs-on: ubuntu-latest
