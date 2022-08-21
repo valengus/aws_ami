@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
       v.memory           = 4086
     end
     config.vm.provision "ansible" , run: "always" do |ansible|
-      ansible.playbook = "ansible/playfiles/cleanup.yml"
+      ansible.playbook = "ansible/cleanup.yml"
     end
   end
 
