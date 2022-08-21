@@ -11,30 +11,71 @@
   - name: Delete DNF cache
     command: dnf clean all
 
-  - name: cloud-init clean 
-    shell: cloud-init clean
+  # - name: cloud-init clean 
+  #   shell: cloud-init clean
 
-  - lineinfile: 
-      dest: /etc/ssh/sshd_config 
-      regexp: '^#?AuthenticationMethods' 
-      line: 'AuthenticationMethods publickey'
+  - name: sshd config
+    block:
+    - lineinfile: 
+        dest: /etc/ssh/sshd_config 
+        regexp: '^#?AuthenticationMethods' 
+        line: 'AuthenticationMethods publickey'
 
-  - lineinfile: 
-      dest: /etc/ssh/sshd_config 
-      regexp: '^#?PasswordAuthentication' 
-      line: 'PasswordAuthentication no'
+    - lineinfile: 
+        dest: /etc/ssh/sshd_config 
+        regexp: '^#?PasswordAuthentication' 
+        line: 'PasswordAuthentication no'
 
-  - lineinfile: 
-      dest: /etc/ssh/sshd_config 
-      regexp: '^#?ChallengeResponseAuthentication' 
-      line: 'ChallengeResponseAuthentication no'
+    - lineinfile: 
+        dest: /etc/ssh/sshd_config 
+        regexp: '^#?ChallengeResponseAuthentication' 
+        line: 'ChallengeResponseAuthentication no'
 
-  - lineinfile: 
-      dest: /etc/ssh/sshd_config 
-      regexp: '^#?PubkeyAuthentication' 
-      line: 'PubkeyAuthentication yes'
+    - lineinfile: 
+        dest: /etc/ssh/sshd_config 
+        regexp: '^#?PubkeyAuthentication' 
+        line: 'PubkeyAuthentication yes'
 
-  - lineinfile: 
-      dest: /etc/ssh/sshd_config 
-      regexp: '^#?PermitRootLogin' 
-      line: 'PermitRootLogin no'
+    - lineinfile: 
+        dest: /etc/ssh/sshd_config 
+        regexp: '^#?PermitRootLogin' 
+        line: 'PermitRootLogin no'
+
+  - name: Truncate files
+    command: "truncate -s 0 {{ item }}"
+    loop:
+      - /etc/machine-id
+      - /var/log/audit/audit.log
+      - /var/log/cron
+      - /var/log/maillog
+      - /var/log/messages
+      - /var/log/secure
+
+  - name: Find log files.
+    find:
+      paths:
+        - /var/log
+        - /var/log/sssd
+      patterns: '*log'
+    register: log_files
+
+  - name: Truncate log files
+    command: "truncate -s 0 {{ item.path }}"
+    loop: "{{ log_files.files }}"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
