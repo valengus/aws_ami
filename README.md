@@ -26,10 +26,10 @@ TEST:
 
 ```bash
 
-terraform init ./terraform/
+terraform init ./terraform-oraclelinux8/
 
-terraform apply -auto-approve ./terraform/
+terraform apply -auto-approve ./terraform-oraclelinux8/
 
-terraform destroy -auto-approve ./terraform/
+terraform destroy -auto-approve ./terraform-oraclelinux8/
 
 ```
