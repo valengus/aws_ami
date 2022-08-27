@@ -62,3 +62,16 @@
   - name: Truncate log files
     command: "truncate -s 0 {{ item.path }}"
     loop: "{{ log_files.files }}"
+
+  - name: Remove random-seed
+    ansible.builtin.file:
+      path: /var/lib/systemd/random-seed
+      state: absent
+
+  - name: Remove ks.cfg 
+    ansible.builtin.file:
+      path: "{{ item }}"
+      state: absent
+    loop:
+      - /root/anaconda-ks.cfg 
+      - /root/original-ks.cfg
