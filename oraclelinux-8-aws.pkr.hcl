@@ -48,7 +48,7 @@ source "qemu" "oraclelinux-8-aws" {
   memory             = 2048
   net_device         = "virtio-net"
   qemu_binary        = ""
-  vm_name            = "oraclelinux-8-AWS-8.6.x86_64.raw"
+  vm_name            = "oraclelinux-8-ami"
   boot_wait          = "5s"
   boot_command       = [ "<tab> net.ifnames=0 inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/oraclelinux-8.aws.ks<enter><wait>" ]
 }
