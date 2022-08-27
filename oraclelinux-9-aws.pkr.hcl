@@ -72,16 +72,16 @@ build {
   }
 
   # post-processor "amazon-import" {
-  #   ami_name        = "oraclelinux-8-latest-${local.packerstarttime}"
+  #   ami_name        = "oraclelinux-9-latest-${local.packerstarttime}"
   #   format          = "raw"
-  #   ami_description = "Oraclelinux OS 8 x86_64 image"
+  #   ami_description = "Oraclelinux OS 9 x86_64 image"
   #   s3_bucket_name  = var.s3_bucket_name
   #   region          = var.region
   #   access_key      = var.access_key
   #   secret_key      = var.secret_key
   #   license_type    = "BYOL"
   #   tags = {
-  #     Name = "oraclelinux-8-latest"
+  #     Name = "oraclelinux-9-latest"
   #   }
   #   keep_input_artifact = true
   # }
