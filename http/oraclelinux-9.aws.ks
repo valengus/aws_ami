@@ -65,3 +65,8 @@ iproute
 perl
 yum-utils
 %end
+
+%post
+sed -i 's/^#PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config
+
+%end

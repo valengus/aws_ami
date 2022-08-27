@@ -46,7 +46,6 @@ source "qemu" "oraclelinux-9-aws" {
   format             = "raw"
   headless           = false
   memory             = 2048
-  machine_type       = "q35"
   qemuargs           = [ ["-cpu", "host"] ]
   net_device         = "virtio-net"
   qemu_binary        = ""
