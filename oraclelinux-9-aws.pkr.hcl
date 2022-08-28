@@ -49,7 +49,7 @@ source "qemu" "oraclelinux-9-aws" {
   qemuargs           = [ ["-cpu", "host"] ]
   net_device         = "virtio-net"
   qemu_binary        = ""
-  vm_name            = "oraclelinux-9-ami"
+  vm_name            = "oraclelinux-9-ami.raw"
   boot_wait          = "5s"
   boot_command       = [ "<tab> net.ifnames=0 inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/oraclelinux-9.aws.ks<enter><wait>" ]
 }
@@ -64,7 +64,27 @@ build {
     ansible_env_vars = [
       "ANSIBLE_HOST_KEY_CHECKING=False",
     ]
-    playbook_file     = "ansible/oraclelinux9/oraclelinux-9.yml"
+    playbook_file     = "ansible/oraclelinux/oraclelinux-9.yml"
+    user              = "${build.User}"
+    extra_arguments   = [ "-e", "ansible_ssh_pass=${build.Password}"]
+    use_proxy         = false
+  }
+
+  provisioner "ansible" {
+    ansible_env_vars = [
+      "ANSIBLE_HOST_KEY_CHECKING=False",
+    ]
+    playbook_file     = "ansible/oraclelinux/amazon_ssm.yml"
+    user              = "${build.User}"
+    extra_arguments   = [ "-e", "ansible_ssh_pass=${build.Password}"]
+    use_proxy         = false
+  }
+
+  provisioner "ansible" {
+    ansible_env_vars = [
+      "ANSIBLE_HOST_KEY_CHECKING=False",
+    ]
+    playbook_file     = "ansible/oraclelinux/cleanup.yml"
     user              = "${build.User}"
     extra_arguments   = [ "-e", "ansible_ssh_pass=${build.Password}"]
     use_proxy         = false
