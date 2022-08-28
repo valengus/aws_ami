@@ -48,7 +48,7 @@ source "qemu" "oraclelinux-8-aws" {
   memory             = 2048
   net_device         = "virtio-net"
   qemu_binary        = ""
-  vm_name            = "oraclelinux-8-ami"
+  vm_name            = "oraclelinux-8-ami.raw"
   boot_wait          = "5s"
   boot_command       = [ "<tab> net.ifnames=0 inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/oraclelinux-8.aws.ks<enter><wait>" ]
 }
@@ -108,9 +108,11 @@ build {
 
 
 source "amazon-ebs" "oraclelinux-8-latest-UEK" {
-  region          = var.region
-  access_key      = var.access_key
-  secret_key      = var.secret_key
+  region                = var.region
+  access_key            = var.access_key
+  secret_key            = var.secret_key
+  force_deregister      = true
+  force_delete_snapshot = true
   source_ami_filter {
     filters = {
       name = "oraclelinux-8-latest-*"
