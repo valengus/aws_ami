@@ -62,7 +62,7 @@ build {
     ansible_env_vars = [
       "ANSIBLE_HOST_KEY_CHECKING=False",
     ]
-    playbook_file     = "ansible/oraclelinux8/oraclelinux-8.yml"
+    playbook_file     = "ansible/oraclelinux/oraclelinux-8.yml"
     user              = "${build.User}"
     extra_arguments   = [ "-e", "ansible_ssh_pass=${build.Password}"]
     use_proxy         = false
@@ -72,7 +72,7 @@ build {
     ansible_env_vars = [
       "ANSIBLE_HOST_KEY_CHECKING=False",
     ]
-    playbook_file     = "ansible/oraclelinux8/amazon_ssm.yml"
+    playbook_file     = "ansible/oraclelinux/amazon_ssm.yml"
     user              = "${build.User}"
     extra_arguments   = [ "-e", "ansible_ssh_pass=${build.Password}"]
     use_proxy         = false
@@ -82,7 +82,7 @@ build {
     ansible_env_vars = [
       "ANSIBLE_HOST_KEY_CHECKING=False",
     ]
-    playbook_file     = "ansible/oraclelinux8/cleanup.yml"
+    playbook_file     = "ansible/oraclelinux/cleanup.yml"
     user              = "${build.User}"
     extra_arguments   = [ "-e", "ansible_ssh_pass=${build.Password}"]
     use_proxy         = false
@@ -138,7 +138,7 @@ build {
     ansible_env_vars = [
       "ANSIBLE_HOST_KEY_CHECKING=False",
     ]
-    playbook_file     = "ansible/oraclelinux8/UEK.yml"
+    playbook_file     = "ansible/oraclelinux/UEK6.yml"
     use_proxy         = false
   }
 
@@ -146,7 +146,7 @@ build {
     ansible_env_vars = [
       "ANSIBLE_HOST_KEY_CHECKING=False",
     ]
-    playbook_file     = "ansible/oraclelinux8/cleanup.yml"
+    playbook_file     = "ansible/oraclelinux/cleanup.yml"
     use_proxy         = false
   }
 
