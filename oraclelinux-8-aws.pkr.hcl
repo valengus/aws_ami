@@ -62,7 +62,7 @@ build {
     ansible_env_vars = [
       "ANSIBLE_HOST_KEY_CHECKING=False",
     ]
-    playbook_file     = "ansible/oraclelinux/oraclelinux-8.yml"
+    playbook_file     = "ansible/oraclelinux/oraclelinux.yml"
     user              = "${build.User}"
     extra_arguments   = [ "-e", "ansible_ssh_pass=${build.Password}"]
     use_proxy         = false
