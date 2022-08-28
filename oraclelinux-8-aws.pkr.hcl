@@ -111,8 +111,7 @@ source "amazon-ebs" "oraclelinux-8-latest-UEK" {
   region                = var.region
   access_key            = var.access_key
   secret_key            = var.secret_key
-  force_deregister      = true
-  force_delete_snapshot = true
+
   source_ami_filter {
     filters = {
       name = "oraclelinux-8-latest-*"
