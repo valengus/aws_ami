@@ -4,3 +4,4 @@ output-oraclelinux-9-aws/*
 .terraform/*
 .vagrant/*
 Vagrantfile
+ssh_key/*
