@@ -11,6 +11,20 @@ data "aws_ami" "oracle86" {
   }
 }
 
+data "aws_ami" "centos7" {
+  most_recent = true
+  owners      = ["679593333241"]
+  filter {
+      name    = "name"
+      values  = ["CentOS-7-2111*"]
+  }
+  filter {
+    name      = "architecture"
+    values    = ["x86_64"]
+  }
+}
+
+
 variable "region" {
   type = string
 }

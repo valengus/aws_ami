@@ -6,7 +6,7 @@
   tasks:
 
   - name: Install epel
-    dnf:
+    yum:
       name: epel-release
       state: present
 
@@ -29,7 +29,7 @@
     when: hashicorp_repo.changed
 
   - name: Install packer
-    dnf:
+    yum:
       name: packer
       state: present
 
@@ -62,14 +62,14 @@
   # Ansible
 
   - name: Install ansible
-    dnf:
+    yum:
       name: ansible
       state: present
 
   # Git
 
   - name: Install git
-    dnf:
+    yum:
       name: git
       state: present
 
