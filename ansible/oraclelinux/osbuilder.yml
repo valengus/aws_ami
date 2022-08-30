@@ -53,6 +53,12 @@
       state: started 
       enabled: yes
 
+  - name: qemu-system-x86_64 symbolic link
+    ansible.builtin.file:
+      src: /usr/libexec/qemu-kvm
+      dest: /usr/local/bin/qemu-system-x86_64
+      state: link
+
   # Ansible
 
   - name: Install ansible
@@ -71,3 +77,12 @@
     ansible.builtin.git:
       repo: https://github.com/valengus/aws_ami.git
       dest: /aws_ami
+      
+  - name: Recursively change ownership of a directory /aws_ami
+    ansible.builtin.file:
+      path: /aws_ami
+      state: directory
+      recurse: yes
+      owner: "{{ ansible_user }}"
+      group: "{{ ansible_user }}"
+

@@ -8,7 +8,7 @@ resource "aws_key_pair" "osbuilder_priv_key" {
   public_key = tls_private_key.osbuilder_priv_key.public_key_openssh
 
   provisioner "local-exec" {
-    command = "echo '${tls_private_key.osbuilder_priv_key.private_key_pem}' > ssh_key/osbuilder_priv_key ; chmod 400 ssh_key/osbuilder_priv_key"
+    command = "echo '${tls_private_key.osbuilder_priv_key.private_key_pem}' > ssh_key/osbuilder_priv_key ; chmod 600 ssh_key/osbuilder_priv_key"
   }
 }
 
@@ -35,6 +35,10 @@ resource "aws_instance" "osbuilder" {
   instance_type          = "t2.medium"
   key_name               = aws_key_pair.osbuilder_priv_key.id
   vpc_security_group_ids = [aws_security_group.osbuilder_security_group.id]
+
+  root_block_device {
+    volume_size = 20
+  }
 
   provisioner "local-exec" {
     environment = { ANSIBLE_HOST_KEY_CHECKING = "False" }
