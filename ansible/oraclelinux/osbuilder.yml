@@ -1,0 +1,73 @@
+---
+- name: 'provision'
+  hosts: all
+  become: true
+
+  tasks:
+
+  - name: Install epel
+    dnf:
+      name: epel-release
+      state: present
+
+  # Packer
+
+  - name: Add hashicorp repo
+    ansible.builtin.yum_repository:
+      name: hashicorp
+      description: Hashicorp Stable - $basearch
+      file: hashicorp
+      baseurl: https://rpm.releases.hashicorp.com/RHEL/$releasever/$basearch/stable
+      enabled: yes
+      gpgcheck: yes
+      gpgkey: https://rpm.releases.hashicorp.com/gpg
+    register: hashicorp_repo
+
+  - name: Update yum cache
+    yum:
+      update_cache: yes
+    when: hashicorp_repo.changed
+
+  - name: Install packer
+    dnf:
+      name: packer
+      state: present
+
+  # KVM
+
+  - name: install the 'virtualization-host' package group
+    yum: 
+      name: "@Virtualization Hypervisor" 
+      state: present
+
+  - name: Add users to libvirtd
+    user:
+      name: "{{ ansible_user }}"
+      append: yes
+      groups: libvirt
+      createhome: yes
+
+  - name: start libvirtd service
+    service: 
+      name: libvirtd 
+      state: started 
+      enabled: yes
+
+  # Ansible
+
+  - name: Install ansible
+    dnf:
+      name: ansible
+      state: present
+
+  # Git
+
+  - name: Install git
+    dnf:
+      name: git
+      state: present
+
+  - name: git checkout
+    ansible.builtin.git:
+      repo: https://github.com/valengus/aws_ami.git
+      dest: /aws_ami
