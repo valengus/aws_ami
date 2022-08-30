@@ -44,7 +44,7 @@ source "qemu" "oraclelinux-9-aws" {
   disk_detect_zeroes = "unmap"
   disk_compression   = true
   format             = "raw"
-  headless           = false
+  headless           = true
   memory             = 2048
   qemuargs           = [ ["-cpu", "host"] ]
   net_device         = "virtio-net"
