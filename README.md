@@ -22,7 +22,7 @@ packer build -force -only=amazon-ebs.oraclelinux-8-latest-UEK ./oraclelinux-8-aw
 
 ```
 
--OR-
+OR
 
 ```bash
 
