@@ -22,6 +22,16 @@ packer build -force -only=amazon-ebs.oraclelinux-8-latest-UEK ./oraclelinux-8-aw
 
 ```
 
+-OR-
+
+```bash
+
+packer build -force -only=virtualbox-iso.oraclelinux-8-aws ./oraclelinux-8-aws.pkr.hcl
+
+packer build -force -only=amazon-ebs.oraclelinux-8-latest-UEK ./oraclelinux-8-aws.pkr.hcl
+
+```
+
 TEST:
 
 ```bash
