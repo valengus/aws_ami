@@ -5,6 +5,11 @@
 
   tasks:
 
+  - name: Upgrade all packages
+    ansible.builtin.yum:
+      name: '*'
+      state: latest
+
   - name: Install epel
     yum:
       name: epel-release
@@ -40,7 +45,7 @@
   #     name: "@Virtualization Hypervisor" 
   #     state: present
 
-  # - name: Add users to libvirtd
+  # - name: Add user to libvirtd
   #   user:
   #     name: "{{ ansible_user }}"
   #     append: yes
@@ -61,6 +66,29 @@
 
   # Virtualbox
 
+  - name: Install additional software
+    dnf:
+      name:
+        - kernel-uek-devel
+        - gcc
+        - make
+        - perl
+        - bzip2
+        - dkms
+      state: present
+
+  - name: Install VirtualBox-6.1
+    dnf:
+      name: https://download.virtualbox.org/virtualbox/6.1.36/VirtualBox-6.1-6.1.36_152435_el8-1.x86_64.rpm
+      disable_gpg_check: yes
+      state: present
+
+  - name: Add user to vboxusers
+    user:
+      name: "{{ ansible_user }}"
+      append: yes
+      groups: vboxusers
+      createhome: yes
 
   # Ansible
 
@@ -88,4 +116,3 @@
       recurse: yes
       owner: "{{ ansible_user }}"
       group: "{{ ansible_user }}"
-

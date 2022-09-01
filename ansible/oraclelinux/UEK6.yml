@@ -5,21 +5,21 @@
 
   tasks:
 
-  - name: ol8_UEKR6 repo
+  - name: ol8_UEKR7 repo
     yum_repository:
       name: ol8_UEKR6
-      description: Latest Unbreakable Enterprise Kernel Release 6 for Oracle Linux $releasever ($basearch)
-      file: ol8_UEKR6
-      baseurl: https://yum$ociregion.$ocidomain/repo/OracleLinux/OL8/UEKR6/$basearch/
+      description: Latest Unbreakable Enterprise Kernel Release 7 for Oracle Linux $releasever ($basearch)
+      file: uek-ol8
+      baseurl: https://yum$ociregion.$ocidomain/repo/OracleLinux/OL8/UEKR7/$basearch/
       gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
       gpgcheck: yes
       enabled: yes
-    register: ol8_UEKR6_repo
+    register: ol8_UEKR7_repo
 
   - name: Update yum cache
     yum:
       update_cache: yes
-    when: ol8_UEKR6_repo.changed
+    when: ol8_UEKR7_repo.changed
 
   - name: install UEK
     yum:
