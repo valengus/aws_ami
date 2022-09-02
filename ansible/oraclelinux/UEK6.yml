@@ -7,19 +7,32 @@
 
   - name: ol8_UEKR7 repo
     yum_repository:
-      name: ol8_UEKR6
+      name: ol8_UEKR7
       description: Latest Unbreakable Enterprise Kernel Release 7 for Oracle Linux $releasever ($basearch)
       file: uek-ol8
       baseurl: https://yum$ociregion.$ocidomain/repo/OracleLinux/OL8/UEKR7/$basearch/
       gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
       gpgcheck: yes
       enabled: yes
-    register: ol8_UEKR7_repo
+    register: UEKR7_repo
+    when: ansible_distribution_major_version == "8"
+
+  - name: ol9_UEKR7 repo
+    yum_repository:
+      name: ol9_UEKR7
+      description: Oracle Linux 9 UEK Release 7 ($basearch)
+      file: uek-ol9
+      baseurl: https://yum$ociregion.$ocidomain/repo/OracleLinux/OL9/UEKR7/$basearch/
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+      gpgcheck: yes
+      enabled: yes
+    register: UEKR7_repo
+    when: ansible_distribution_major_version == "9"
 
   - name: Update yum cache
     yum:
       update_cache: yes
-    when: ol8_UEKR7_repo.changed
+    when: UEKR7_repo.changed
 
   - name: install UEK
     yum:

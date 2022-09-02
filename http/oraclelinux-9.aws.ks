@@ -2,19 +2,15 @@
 # Firewall configuration
 firewall --enabled --service=ssh
 
-# Install OS instead of upgrade
-# install
-
 # Use Oracle Linux yum server repositories as installation source
 url --url="https://yum.oracle.com/repo/OracleLinux/OL9/baseos/latest/x86_64"
 repo --name="ol9_AppStream" --baseurl="https://yum.oracle.com/repo/OracleLinux/OL9/appstream/x86_64/"
-# repo --name="ol9_UEKR7" --baseurl="https://yum.oracle.com/repo/OracleLinux/OL9/UEKR7/x86_64/"
 
 # Root password
 rootpw --plaintext root
 
-# Use graphical install
-graphical
+# Use text install
+text
 firstboot --disable
 
 # Keyboard layouts
@@ -44,6 +40,7 @@ zerombr
 # Partition information
 clearpart --all --initlabel --disklabel=gpt
 autopart --type=plain --noboot --nohome --noswap --nolvm --fstype=xfs
+
 
 services --enabled=NetworkManager,sshd
 

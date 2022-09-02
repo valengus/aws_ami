@@ -8,13 +8,13 @@ install
 # Use Oracle Linux yum server repositories as installation source
 url --url="https://yum.oracle.com/repo/OracleLinux/OL8/baseos/latest/x86_64"
 repo --name="ol8_AppStream" --baseurl="https://yum.oracle.com/repo/OracleLinux/OL8/appstream/x86_64/"
-# repo --name="ol8_UEKR7" --baseurl="https://yum.oracle.com/repo/OracleLinux/OL8/UEKR7/x86_64/"
+
 
 # Root password
 rootpw --plaintext root
 
-# Use graphical install
-graphical
+# Use text install
+text
 firstboot --disable
 
 # Keyboard layouts

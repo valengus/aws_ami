@@ -54,10 +54,34 @@ source "qemu" "oraclelinux-9-aws" {
   boot_command       = [ "<tab> net.ifnames=0 inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/oraclelinux-9.aws.ks<enter><wait>" ]
 }
 
+source "virtualbox-iso" "oraclelinux-9-aws" {
+  format               = "ova"
+  iso_url            = "https://yum.oracle.com/ISOS/OracleLinux/OL9/u0/x86_64/OracleLinux-R9-U0-x86_64-boot.iso"
+  iso_checksum       = "sha256:8da742eadb7bcd4d03bacd71c73d500247fa2f680a18c619220bcb88d6bd336f"
+  boot_command         = [ "<tab> net.ifnames=0 inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/oraclelinux-9.aws.ks<enter><wait>" ]
+  boot_wait            = "5s"
+  cpus                 = 2
+  memory               = 2048
+  disk_size            = 4096
+  headless             = true
+  http_directory       = "http"
+  guest_os_type        = "RedHat_64"
+  shutdown_command     = "systemctl poweroff"
+  ssh_username         = "root"
+  ssh_password         = "root"
+  ssh_timeout          = "3600s"
+  hard_drive_interface = "sata"
+  vboxmanage_post = [
+    ["modifyvm", "{{.Name}}", "--memory", "1024"],
+    ["modifyvm", "{{.Name}}", "--cpus", "1"]
+  ]
+}
+
 
 build {
   sources = [
-    "sources.qemu.oraclelinux-9-aws"
+    "sources.qemu.oraclelinux-9-aws",
+    "sources.virtualbox-iso.oraclelinux-9-aws"
   ]
 
   provisioner "ansible" {
@@ -103,5 +127,27 @@ build {
   #     Name = "oraclelinux-9-latest"
   #   }
   #   keep_input_artifact = true
+  #   only = [
+  #     "qemu.oraclelinux-9-aws"
+  #   ]
   # }
+
+  post-processor "amazon-import" {
+    ami_name        = "oraclelinux-9-latest-${local.packerstarttime}"
+    format          = "ova"
+    ami_description = "Oraclelinux OS 9 x86_64 image"
+    s3_bucket_name  = var.s3_bucket_name
+    region          = var.region
+    access_key      = var.access_key
+    secret_key      = var.secret_key
+    license_type    = "BYOL"
+    tags = {
+      Name = "oraclelinux-9-latest"
+    }
+    keep_input_artifact = true
+    only = [
+      "virtualbox-iso.oraclelinux-9-aws"
+    ]
+  }
+
 }
